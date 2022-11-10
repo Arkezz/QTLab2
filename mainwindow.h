@@ -36,6 +36,7 @@ private:
 	int* array;
 	//Size of the array
 	int size;
+    int sortTime;
 	//Number that is going to be searched
 	int number;
 	//merge function

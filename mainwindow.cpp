@@ -84,20 +84,23 @@ void MainWindow::mergeSort(int* array, int left, int right)
 
 void MainWindow::on_normalSearchButton_clicked()
 {
+	normalSearch = true;
+	ui->searchMethodText->setText("Using Normal Search");
 }
 
 void MainWindow::on_binarySearchButton_clicked()
 {
-	//Use binary search to find the number
+	normalSearch = false;
+	ui->searchMethodText->setText("Using Binary Search");
 }
 
 void MainWindow::on_generateDataButton_clicked()
 {
 	QListWidget* list = ui->listWidget;
 	QLabel* dataText = ui->dataSizeText;
+	size = ui->datasetInput->text().toInt();
 	list->clear();
 	dataText->setText("The Dataset Size is: " + QString::number(size));
-	size = ui->datasetInput->text().toInt();
 	array = new int[size];
 	for (int i = 0; i < size; i++)
 	{
@@ -138,9 +141,12 @@ void MainWindow::on_stlSortButton_clicked()
 	status->setText("Sorted Array");
 	list->clear();
 
-	//Sort the array using stl sort algorithm
-	//use stl sort on the array
+	//use stl sort on the array and store the time it took to sort the array
+	auto start = std::chrono::high_resolution_clock::now();
 	std::sort(array, array + size);
+	auto end = std::chrono::high_resolution_clock::now();
+	sortTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+
 	//Enter the array to the list
 	for (int i = 0; i < size; i++)
 	{
@@ -150,54 +156,48 @@ void MainWindow::on_stlSortButton_clicked()
 
 void MainWindow::on_findButton_clicked()
 {
+	number = ui->numberInput->text().toInt();
+	int searchTime;
 	//When the user clicks the button a qmessage popup shows whether the number is in the array or not. also shows the time needed (in nanoseconds) to search the array
-	QListWidget* list = ui->listWidget;
-	QLabel* method = ui->mergeMethodText;
-	QLabel* status = ui->arrayStatus;
-	method->setText("Searching Using Binary Search");
-	status->setText("Sorted Array");
-	list->clear();
-
-	//use binary search on the array
-    int number = ui->lineEdit->text().toInt();
-	int left = 0;
-	int right = size - 1;
-	int middle = (left + right) / 2;
-	bool found = false;
 
 	//Start the timer
 	auto start = std::chrono::high_resolution_clock::now();
-	while (left <= right)
+	//Find the number and store the time it took to find the number in the array then display the result in qmessagebox whther the number is found and how long it took to sort/find
+	if (normalSearch)
 	{
-		if (array[middle] == number)
+		for (int i = 0; i < size; i++)
 		{
-			found = true;
-			break;
+			if (array[i] == number)
+			{
+				auto end = std::chrono::high_resolution_clock::now();
+				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+				QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number");
+				return;
+			}
 		}
-		else if (array[middle] < number)
-		{
-			left = middle + 1;
-		}
-		else
-		{
-			right = middle - 1;
-		}
-		middle = (left + right) / 2;
-	}
-	//Stop the timer
-	auto stop = std::chrono::high_resolution_clock::now();
-	//Calculate the time
-	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
-	//Show the time
-	QMessageBox msgBox;
-	if (found)
-	{
-		msgBox.setText("The number is in the array");
 	}
 	else
 	{
-		msgBox.setText("The number is not in the array");
+		int left = 0;
+		int right = size - 1;
+		while (left <= right)
+		{
+			int middle = (left + right) / 2;
+			if (array[middle] == number)
+			{
+				auto end = std::chrono::high_resolution_clock::now();
+				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+				QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number");
+				return;
+			}
+			else if (array[middle] < number)
+			{
+				left = middle + 1;
+			}
+			else
+			{
+				right = middle - 1;
+			}
+		}
 	}
-	msgBox.setInformativeText("The time needed to search the array is: " + QString::number(duration.count()) + " nanoseconds");
-	msgBox.exec();
 }

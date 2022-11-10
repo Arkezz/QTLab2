@@ -34,13 +34,13 @@ public:
     QPushButton *stlSortButton;
     QPushButton *findButton;
     QLabel *arrayStatus;
-    QLineEdit *lineEdit;
     QLabel *arrayStatus_2;
     QLineEdit *datasetInput;
     QListWidget *listWidget;
     QLabel *dataSizeText;
     QLabel *mergeMethodText;
     QLabel *searchMethodText;
+    QLineEdit *numberInput;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -75,9 +75,6 @@ public:
         arrayStatus = new QLabel(centralwidget);
         arrayStatus->setObjectName(QString::fromUtf8("arrayStatus"));
         arrayStatus->setGeometry(QRect(360, 60, 101, 16));
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(550, 230, 191, 24));
         arrayStatus_2 = new QLabel(centralwidget);
         arrayStatus_2->setObjectName(QString::fromUtf8("arrayStatus_2"));
         arrayStatus_2->setGeometry(QRect(110, 310, 101, 16));
@@ -96,6 +93,9 @@ public:
         searchMethodText = new QLabel(centralwidget);
         searchMethodText->setObjectName(QString::fromUtf8("searchMethodText"));
         searchMethodText->setGeometry(QRect(600, 170, 161, 16));
+        numberInput = new QLineEdit(centralwidget);
+        numberInput->setObjectName(QString::fromUtf8("numberInput"));
+        numberInput->setGeometry(QRect(590, 240, 113, 24));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));

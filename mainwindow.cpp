@@ -94,10 +94,10 @@ void MainWindow::on_binarySearchButton_clicked()
 void MainWindow::on_generateDataButton_clicked()
 {
 	QListWidget* list = ui->listWidget;
-    QLabel* dataText = ui->dataSizeText;
+	QLabel* dataText = ui->dataSizeText;
 	list->clear();
-    dataText->setText("The Dataset Size is: " + QString::number(size));
-    size = ui->datasetInput->text().toInt();
+	dataText->setText("The Dataset Size is: " + QString::number(size));
+	size = ui->datasetInput->text().toInt();
 	array = new int[size];
 	for (int i = 0; i < size; i++)
 	{
@@ -114,9 +114,12 @@ void MainWindow::on_generateDataButton_clicked()
 void MainWindow::on_mergeSortButton_clicked()
 {
 	QListWidget* list = ui->listWidget;
-    QLabel* method = ui->mergeMethodText;
-    method->setText("Sorting Using Merge Sort");
+	QLabel* method = ui->mergeMethodText;
+	QLabel* status = ui->arrayStatus;
+	method->setText("Sorting Using Merge Sort");
+	status->setText("Sorted Array");
 	list->clear();
+
 	//use merge sort on the array
 	mergeSort(array, 0, size - 1);
 	//Enter the array to the list
@@ -129,6 +132,10 @@ void MainWindow::on_mergeSortButton_clicked()
 void MainWindow::on_stlSortButton_clicked()
 {
 	QListWidget* list = ui->listWidget;
+	QLabel* method = ui->mergeMethodText;
+	QLabel* status = ui->arrayStatus;
+	method->setText("Sorting Using STL Sort");
+	status->setText("Sorted Array");
 	list->clear();
 
 	//Sort the array using stl sort algorithm
@@ -143,4 +150,54 @@ void MainWindow::on_stlSortButton_clicked()
 
 void MainWindow::on_findButton_clicked()
 {
+	//When the user clicks the button a qmessage popup shows whether the number is in the array or not. also shows the time needed (in nanoseconds) to search the array
+	QListWidget* list = ui->listWidget;
+	QLabel* method = ui->mergeMethodText;
+	QLabel* status = ui->arrayStatus;
+	method->setText("Searching Using Binary Search");
+	status->setText("Sorted Array");
+	list->clear();
+
+	//use binary search on the array
+    int number = ui->lineEdit->text().toInt();
+	int left = 0;
+	int right = size - 1;
+	int middle = (left + right) / 2;
+	bool found = false;
+
+	//Start the timer
+	auto start = std::chrono::high_resolution_clock::now();
+	while (left <= right)
+	{
+		if (array[middle] == number)
+		{
+			found = true;
+			break;
+		}
+		else if (array[middle] < number)
+		{
+			left = middle + 1;
+		}
+		else
+		{
+			right = middle - 1;
+		}
+		middle = (left + right) / 2;
+	}
+	//Stop the timer
+	auto stop = std::chrono::high_resolution_clock::now();
+	//Calculate the time
+	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
+	//Show the time
+	QMessageBox msgBox;
+	if (found)
+	{
+		msgBox.setText("The number is in the array");
+	}
+	else
+	{
+		msgBox.setText("The number is not in the array");
+	}
+	msgBox.setInformativeText("The time needed to search the array is: " + QString::number(duration.count()) + " nanoseconds");
+	msgBox.exec();
 }

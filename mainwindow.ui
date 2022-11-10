@@ -118,16 +118,6 @@
      <string>Unsorted Array</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>230</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="arrayStatus_2">
     <property name="geometry">
      <rect>
@@ -198,6 +188,16 @@
     </property>
     <property name="text">
      <string>searchmethod</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="numberInput">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>240</y>
+      <width>113</width>
+      <height>24</height>
+     </rect>
     </property>
    </widget>
   </widget>

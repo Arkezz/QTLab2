@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <algorithm>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,5 +42,7 @@ private:
 	void merge(int* array, int left, int middle, int right);
 	//mergeSort function
 	void mergeSort(int* array, int left, int right);
+	//Search method flag
+	bool normalSearch;
 };
 #endif // MAINWINDOW_H

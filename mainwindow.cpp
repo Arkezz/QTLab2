@@ -162,19 +162,19 @@ void MainWindow::on_findButton_clicked()
 
 	//Start the timer
 	auto start = std::chrono::high_resolution_clock::now();
-	//Find the number and store the time it took to find the number in the array then display the result in qmessagebox whther the number is found and how long it took to sort/find
+	//Find the number and store the time it took to find the number in the array then display the result in qmessagebox whther the number is found and how long it took to sort/find if it isnt found display a message saying the number is not found
 	if (normalSearch)
 	{
 		for (int i = 0; i < size; i++)
 		{
 			if (array[i] == number)
 			{
-				auto end = std::chrono::high_resolution_clock::now();
-				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-				QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number");
+				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count();
+                QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number\n" + "The time it took to sort the array is: " + QString::number(sortTime) + " nanoseconds");
 				return;
 			}
 		}
+		QMessageBox::information(this, "Number Not Found", "The number is not found in the array");
 	}
 	else
 	{
@@ -185,9 +185,8 @@ void MainWindow::on_findButton_clicked()
 			int middle = (left + right) / 2;
 			if (array[middle] == number)
 			{
-				auto end = std::chrono::high_resolution_clock::now();
-				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-				QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number");
+				searchTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start).count();
+                QMessageBox::information(this, "Number Found", "The number is found in the array and it took " + QString::number(searchTime) + " nanoseconds to find the number\n" + "The time it took to sort the array is: " + QString::number(sortTime) + " nanoseconds");
 				return;
 			}
 			else if (array[middle] < number)
@@ -199,5 +198,7 @@ void MainWindow::on_findButton_clicked()
 				right = middle - 1;
 			}
 		}
+		QMessageBox::information(this, "Number Not Found", "The number is not found in the array");
 	}
 }
+

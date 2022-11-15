@@ -122,9 +122,9 @@ public:
         findButton->setText(QCoreApplication::translate("MainWindow", "Find It!", nullptr));
         arrayStatus->setText(QCoreApplication::translate("MainWindow", "Unsorted Array", nullptr));
         arrayStatus_2->setText(QCoreApplication::translate("MainWindow", "Input Dataset Size", nullptr));
-        dataSizeText->setText(QCoreApplication::translate("MainWindow", "datasize", nullptr));
-        mergeMethodText->setText(QCoreApplication::translate("MainWindow", "sortmethod", nullptr));
-        searchMethodText->setText(QCoreApplication::translate("MainWindow", "searchmethod", nullptr));
+        dataSizeText->setText(QString());
+        mergeMethodText->setText(QString());
+        searchMethodText->setText(QString());
     } // retranslateUi
 
 };
